@@ -4,17 +4,24 @@ body {
 	font-family: 'Helvetica';
 }
 
-header {
+header, .timeline {
 	text-align: center;
 }
 
-h1 {
+h1, h2 {
 	font-family: 'Pacifico', cursive;
 	text-shadow: 2px 2px black;
 	color: white;
 	width: 100%;
-	font-size: 60px;
 	margin: 20px auto;
+}
+
+h1 {
+	font-size: 60px;
+}
+
+h2 {
+	font-size: 48px;
 }
 
 .tweets {
@@ -82,7 +89,7 @@ h1 {
 }
 
 /* Pushed button effect */
-.button:hover, .button:focus{
+.button:active {
 	-webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
 	-moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
 	box-shadow: 0 0 1px rgba(0,0,0, .75);

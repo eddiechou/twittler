@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <script src="jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
+    <title>Twittler</title>
   </head>
   <body>
     <script>
@@ -34,17 +35,20 @@
         $('.tweet:odd').toggleClass('orange_border');
         attachNameClickHandlers();
 
-        // Update button click handler
+        // Button click handler
         $body.on('click', '.button', function(){
+          // Prepend each new tweet
           for(let i=numTweets; i<streams.home.length - 1; i++){
             var tweetInfo = streams.home[i];
             prependNewTweet(tweetInfo);
           }
           numTweets = streams.home.length;
+          // Style each tweet
           $('.tweet').removeClass('orange_border');
           $('.tweet:odd').toggleClass('orange_border');
           $('.tweet').show();
           attachNameClickHandlers();
+          $('.timeline').remove();
         });
 
         /* Helper Functions */
@@ -61,7 +65,7 @@
           var $tweet = $('<div class="tweet">');
           var $name = $('<div class="name"><span class="userName">@' + tweet.user + '</span> said:</div>')
           var $message = $('<blockquote class="message">' + tweet.message.trim() + '</blockquote>');
-          var $timestamp = $('<div><span>These <em>wise</em> words were proclaimed: </span><time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
+          var $timestamp = $('<div><span>These <em>wise words</em> were proclaimed: </span><time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
 
           $tweet.append($name);
           $tweet.append($message);
@@ -84,10 +88,16 @@
             var $this = this;
             // Hide all tweets first
             $('.tweet').hide();
+
+            // Prepend <h2> for Timeline
+            var $timeline =
             // Show the tweets that have the correct name
-            $('.userName').filter(function(index){
-              return $(this).text() == $($this).text();
-            }).closest('.tweet').removeClass('orange_border').show();
+            $('.userName')
+              .filter(function(index) {
+                return $(this).text() == $($this).text();
+              }).closest('.tweet').removeClass('orange_border').show();
+            $('.tweets').prepend($('<div class="timeline"><h2>' + $($this).text() + '\'s Timeline</h2></div>'));
+
           });
         }
       });
