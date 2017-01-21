@@ -17,7 +17,7 @@
         $body.html('<header><h1>Twittler</h1></header>');
 
         // Add update button
-        $refreshButtonDiv = $('<div class="button"><button type="button">Update Tweets!</button></div>');
+        $refreshButtonDiv = $('<div class="buttonDiv"><button type="button" class="button">Update Tweets!</button></div>');
         $body.append($refreshButtonDiv);
 
         // Add .tweets div to contain all the tweets
@@ -32,9 +32,10 @@
           index -= 1;
         }
         $('.tweet:odd').toggleClass('orange_border');
+        attachNameClickHandlers();
 
-        // On update button click, prepend new tweets
-        $body.on('click', 'button', function(){
+        // Update button click handler
+        $body.on('click', '.button', function(){
           for(let i=numTweets; i<streams.home.length - 1; i++){
             var tweetInfo = streams.home[i];
             prependNewTweet(tweetInfo);
@@ -42,6 +43,8 @@
           numTweets = streams.home.length;
           $('.tweet').removeClass('orange_border');
           $('.tweet:odd').toggleClass('orange_border');
+          $('.tweet').show();
+          attachNameClickHandlers();
         });
 
         /* Helper Functions */
@@ -56,7 +59,7 @@
         function createTweet(tweet){
           // Create Individual Tweet
           var $tweet = $('<div class="tweet">');
-          var $name = $('<div class="name"><span class="userName">@' + tweet.user + '</span> says:</div>')
+          var $name = $('<div class="name"><span class="userName">@' + tweet.user + '</span> said:</div>')
           var $message = $('<blockquote class="message">' + tweet.message.trim() + '</blockquote>');
           var $timestamp = $('<div><span>These <em>wise</em> words were proclaimed: </span><time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
 
@@ -75,6 +78,18 @@
           $("time.timeago").timeago();
         }
 
+        // Filter for the user's tweets
+        function attachNameClickHandlers(){
+          $('.name').on('click', 'span', function(){
+            var $this = this;
+            // Hide all tweets first
+            $('.tweet').hide();
+            // Show the tweets that have the correct name
+            $('.userName').filter(function(index){
+              return $(this).text() == $($this).text();
+            }).closest('.tweet').removeClass('orange_border').show();
+          });
+        }
       });
 
     </script>
