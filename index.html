@@ -11,22 +11,38 @@
     <script>
 
       $(document).ready(function(){
+        var numTweets = 10;
+
         var $body = $('body');
         $body.html('<h1>Twittler</h1>');
 
+        $refreshButton = $('<button type="button">Update Tweets!</button>');
+        $body.append($refreshButton);
         // Add .tweets div to contain all the tweets
         var $tweets = $('<div class="tweets"></div>');
         $tweets.appendTo($body);
 
+        // Append all tweets
         var index = streams.home.length - 1;
         while(index >= 0){
-          var tweet = streams.home[index];
+          var tweetInfo = streams.home[index];
+          appendNewTweet(tweetInfo);
+          index -= 1;
+        }
 
+        $body.on('click', 'button', function(){
+          for(let i=numTweets; i<streams.home.length - 1; i++){
+            var tweetInfo = streams.home[i];
+            prependNewTweet(tweetInfo);
+          }
+          numTweets = streams.home.length - 1;
+        });
 
+        function appendNewTweet(tweet) {
           // Create Individual Tweet
           var $tweet = $('<div class="tweet">');
           var $nameSpan = $('<span class="userName">@' + tweet.user + '</span>');
-          var $message = $('<span class="message">' + tweet.message + '</span>');
+          var $message = $('<span class="message">' + tweet.message.trim() + '</span>');
           var $timestamp = $('<span class="timestamp">Twittlered ' + $.timeago(tweet.created_at) + '</span>');
           $tweet.append($nameSpan);
           $tweet.append($message);
@@ -35,8 +51,21 @@
 
           // Add tweet to tweets container
           $tweet.appendTo($tweets);
+        }
 
-          index -= 1;
+        function prependNewTweet(tweet) {
+          // Create Individual Tweet
+          var $tweet = $('<div class="tweet">');
+          var $nameSpan = $('<span class="userName">@' + tweet.user + '</span>');
+          var $message = $('<span class="message">' + tweet.message.trim() + '</span>');
+          var $timestamp = $('<span class="timestamp">Twittlered ' + $.timeago(tweet.created_at) + '</span>');
+          $tweet.append($nameSpan);
+          $tweet.append($message);
+          $tweet.append($timestamp);
+          $tweet.append('</div>');
+
+          // Add tweet to tweets container
+          $tweet.prependTo($tweets);
         }
 
       });
