@@ -98,13 +98,16 @@
             // Hide all tweets first
             $('.tweet').hide();
 
-            // Prepend <h2> for Timeline
-            var $timeline =
             // Show the tweets that have the correct name
             $('.userName')
               .filter(function(index) {
                 return $(this).text() == $($this).text();
-              }).closest('.tweet').removeClass('orange_border').show();
+              }).closest('.tweet')
+              .removeClass('orange_border')
+              .show();
+
+            // Add timeline <h2>
+            $('.timeline').remove();
             $('.tweets').prepend($('<div class="timeline"><h2>' + $($this).text() + '\'s Timeline</h2></div>'));
 
           });
