@@ -14,10 +14,12 @@
         var numTweets = 10;
 
         var $body = $('body');
-        $body.html('<h1>Twittler</h1>');
+        $body.html('<header><h1>Twittler</h1></header>');
 
-        $refreshButton = $('<button type="button">Update Tweets!</button>');
-        $body.append($refreshButton);
+        // Add update button
+        $refreshButtonDiv = $('<div class="button"><button type="button">Update Tweets!</button></div>');
+        $body.append($refreshButtonDiv);
+
         // Add .tweets div to contain all the tweets
         var $tweets = $('<div class="tweets"></div>');
         $tweets.appendTo($body);
@@ -29,15 +31,20 @@
           appendNewTweet(tweetInfo);
           index -= 1;
         }
+        $('.tweet:odd').toggleClass('orange_border');
 
+        // On update button click, prepend new tweets
         $body.on('click', 'button', function(){
           for(let i=numTweets; i<streams.home.length - 1; i++){
             var tweetInfo = streams.home[i];
             prependNewTweet(tweetInfo);
           }
-          numTweets = streams.home.length - 1;
+          numTweets = streams.home.length;
+
+          $('.tweet:odd').toggleClass('orange_border');
         });
 
+        /* Helper Functions */
         // Appends a new tweet to the .tweets div
         function appendNewTweet(tweet) {
           var $tweet = createTweet(tweet);
@@ -49,11 +56,11 @@
         function createTweet(tweet){
           // Create Individual Tweet
           var $tweet = $('<div class="tweet">');
-          var $nameSpan = $('<span class="userName">@' + tweet.user + '</span>');
-          var $message = $('<span class="message">' + tweet.message.trim() + '</span>');
-          var $timestamp = $('<time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>');
+          var $name = $('<div class="name"><span class="userName">@' + tweet.user + '</span> says:</div>')
+          var $message = $('<blockquote class="message">' + tweet.message.trim() + '</blockquote>');
+          var $timestamp = $('<div><span>These <em>wise</em> words were proclaimed: </span><time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
 
-          $tweet.append($nameSpan);
+          $tweet.append($name);
           $tweet.append($message);
           $tweet.append($timestamp);
           $tweet.append('</div>');
