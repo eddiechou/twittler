@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="styles.css">
     <script src="jquery.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <script src="jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
   </head>
   <body>
@@ -9,14 +12,30 @@
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        $body.html('<h1>Twittler</h1>');
+
+        // Add .tweets div to contain all the tweets
+        var $tweets = $('<div class="tweets"></div>');
+        $tweets.appendTo($body);
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+
+
+          // Create Individual Tweet
+          var $tweet = $('<div class="tweet">');
+          var $nameSpan = $('<span class="userName">@' + tweet.user + '</span>');
+          var $message = $('<span class="message">' + tweet.message + '</span>');
+          var $timestamp = $('<span class="timestamp">Twittlered ' + $.timeago(tweet.created_at) + '</span>');
+          $tweet.append($nameSpan);
+          $tweet.append($message);
+          $tweet.append($timestamp);
+          $tweet.append('</div>');
+
+          // Add tweet to tweets container
+          $tweet.appendTo($tweets);
+
           index -= 1;
         }
 
