@@ -61,11 +61,20 @@
 
         // Creates the tweet to append
         function createTweet(tweet){
+          var timeOptions = {
+            hour: 'numeric', minute: 'numeric',
+            hour12: true
+          };
+          var dateOptions = {
+            year: 'numeric', month: 'numeric', day: 'numeric'
+          };
           // Create Individual Tweet
           var $tweet = $('<div class="tweet">');
           var $name = $('<div class="name"><span class="userName">@' + tweet.user + '</span> said:</div>')
           var $message = $('<blockquote class="message">' + tweet.message.trim() + '</blockquote>');
-          var $timestamp = $('<div><span>These <em>wise words</em> were proclaimed: </span><time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
+          var $timestamp = $('<div class="timestamp"><span>Proclaimed at ' + tweet.created_at.toLocaleString('en-US', timeOptions) +
+            ' on ' + tweet.created_at.toLocaleString('en-US', dateOptions) +
+            '</span> - <time class="timeago" datetime="' + tweet.created_at.toISOString() + '"></time>.</div>');
 
           $tweet.append($name);
           $tweet.append($message);

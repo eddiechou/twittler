@@ -26,7 +26,7 @@ h2 {
 
 .tweets {
 	margin: 0 auto;
-	width: 45%;
+	width: 50%;
 }
 
 .tweet {
@@ -55,7 +55,7 @@ h2 {
 	text-decoration: underline;
 }
 
-.timeago {
+.timestamp {
 	font-style: italic;
 }
 
