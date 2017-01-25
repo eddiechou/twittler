@@ -8,8 +8,12 @@ header, .timeline {
 	text-align: center;
 }
 
-h1, h2 {
+h1, h2, textarea {
 	font-family: 'Pacifico', cursive;
+	font-size: 16px;
+}
+
+h1, h2 {
 	text-shadow: 2px 2px black;
 	color: white;
 	width: 100%;
@@ -24,7 +28,8 @@ h2 {
 	font-size: 48px;
 }
 
-.tweets {
+.tweets, textarea {
+	display: block;
 	margin: 0 auto;
 	width: 50%;
 }
@@ -34,7 +39,6 @@ h2 {
 	border-left: 120px solid #1DE9B6;
 	border-radius: 2em;
     background-color: #E0F2F1;
-	display: block;
 	font-style: bold;
 	margin: 15px auto;
 	padding: 15px 40px;

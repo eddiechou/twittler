@@ -12,31 +12,65 @@
     <script>
 
       $(document).ready(function(){
+        var intervals = []; // For automatic tweet refresh
         var numTweets = 10;
 
-        var $body = $('body');
-        $body.html('<header><h1>Twittler</h1></header>');
+        setupHTML();
+        initializeTweets();
 
-        // Add update button
-        $refreshButtonDiv = $('<div class="buttonDiv"><button type="button" class="button">Update Tweets!</button></div>');
-        $body.append($refreshButtonDiv);
+        /**************/
 
-        // Add .tweets div to contain all the tweets
-        var $tweets = $('<div class="tweets"></div>');
-        $tweets.appendTo($body);
+        function setupHTML() {
+          var $body = $('body');
+          $body.html('<header><h1>Twittler</h1></header>');
 
-        // Append all tweets
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweetInfo = streams.home[index];
-          appendNewTweet(tweetInfo);
-          index -= 1;
+          // Add update button
+          $refreshButtonDiv = $('<div class="buttonDiv"><button type="button" class="button">Show All Tweets!</button></div>');
+          $body.append($refreshButtonDiv);
+
+          $newTweetDiv = $('<div class="newTweetDiv"><textarea rows="2" cols="25"></textarea></div>');
+          $body.append($newTweetDiv);
+
+          // Add .tweets div to contain all the tweets
+          var $tweets = $('<div class="tweets"></div>');
+          $tweets.appendTo($body);
         }
-        $('.tweet:odd').toggleClass('orange_border');
-        attachNameClickHandlers();
 
-        // Button click handler
-        $body.on('click', '.button', function(){
+        function initializeTweets() {
+          $('button').hide();
+
+          // Append all tweets
+          var index = streams.home.length - 1;
+          while(index >= 0){
+            var tweetInfo = streams.home[index];
+            appendNewTweet(tweetInfo);
+            index -= 1;
+          }
+
+          $('.tweet:odd').toggleClass('orange_border');
+          attachNameClickHandlers();
+
+          // Button click handler to view all tweets again
+          $body.on('click', '.button', showMainPage);
+
+          // Update tweets every 3 seconds
+          intervals.push(setInterval(updateTweets, 3000));
+        }
+
+        // Main page
+        function showMainPage() {
+          intervals.forEach(function(interval) {
+            clearInterval(interval);
+          });
+          $('.timeline').remove();
+          $('button').hide();
+          $('.tweet').show();
+          $('textarea').show();
+          intervals.push(setInterval(updateTweets, 3000));
+        }
+
+        // Prepends new tweets to the .tweets div
+        function updateTweets() {
           // Prepend each new tweet
           for(let i=numTweets; i<streams.home.length - 1; i++){
             var tweetInfo = streams.home[i];
@@ -48,18 +82,9 @@
           $('.tweet:odd').toggleClass('orange_border');
           $('.tweet').show();
           attachNameClickHandlers();
-          $('.timeline').remove();
-        });
-
-        /* Helper Functions */
-        // Appends a new tweet to the .tweets div
-        function appendNewTweet(tweet) {
-          var $tweet = createTweet(tweet);
-          $tweet.appendTo($tweets);
-          $("time.timeago").timeago();  // Turns <time> elements to contain timeago text
         }
 
-        // Creates the tweet to append
+        // Creates the tweet element to append
         function createTweet(tweet){
           var timeOptions = {
             hour: 'numeric', minute: 'numeric',
@@ -84,7 +109,14 @@
           return $tweet;
         }
 
-        // Prepends a new tweet to the .tweets div
+        // Appends a tweet element to the .tweets div
+        function appendNewTweet(tweet) {
+          var $tweet = createTweet(tweet);
+          $tweet.appendTo($tweets);
+          $("time.timeago").timeago();  // Turns <time> elements to contain timeago text
+        }
+
+        // Prepends a tweet element to the .tweets div
         function prependNewTweet(tweet) {
           var $tweet = createTweet(tweet);
           $tweet.prependTo($tweets);
@@ -95,8 +127,16 @@
         function attachNameClickHandlers(){
           $('.name').on('click', 'span', function(){
             var $this = this;
+
+            // Clear all intervals refreshing tweet update
+            for (let i = 0; i < intervals.length; i++) {
+              clearInterval(intervals[i]);
+            }
+
             // Hide all tweets first
             $('.tweet').hide();
+            $('textarea').hide();
+            $('button').show();
 
             // Show the tweets that have the correct name
             $('.userName')
