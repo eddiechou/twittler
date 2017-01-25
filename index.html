@@ -10,10 +10,12 @@
   </head>
   <body>
     <script>
-
       $(document).ready(function(){
         var intervals = []; // For automatic tweet refresh
         var numTweets = 10;
+
+        var $body;
+        var $tweets;
 
         setupHTML();
         initializeTweets();
@@ -21,23 +23,23 @@
         /**************/
 
         function setupHTML() {
-          var $body = $('body');
+          $body = $('body');
           $body.html('<header><h1>Twittler</h1></header>');
 
           // Add update button
-          $refreshButtonDiv = $('<div class="buttonDiv"><button type="button" class="button">Show All Tweets!</button></div>');
-          $body.append($refreshButtonDiv);
+          var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton">Show All Tweets!</button></div>');
+          $body.append($showAllButtonDiv);
 
-          $newTweetDiv = $('<div class="newTweetDiv"><textarea rows="2" cols="25"></textarea></div>');
+          var $newTweetDiv = $('<div class="newTweetDiv"><textarea rows="2" cols="25"></textarea></div>');
           $body.append($newTweetDiv);
 
           // Add .tweets div to contain all the tweets
-          var $tweets = $('<div class="tweets"></div>');
+          $tweets = $('<div class="tweets"></div>');
           $tweets.appendTo($body);
         }
 
         function initializeTweets() {
-          $('button').hide();
+          $('.showAllButton').hide();
 
           // Append all tweets
           var index = streams.home.length - 1;
@@ -51,7 +53,7 @@
           attachNameClickHandlers();
 
           // Button click handler to view all tweets again
-          $body.on('click', '.button', showMainPage);
+          $body.on('click', '.showAllButton', showMainPage);
 
           // Update tweets every 3 seconds
           intervals.push(setInterval(updateTweets, 3000));
@@ -63,7 +65,7 @@
             clearInterval(interval);
           });
           $('.timeline').remove();
-          $('button').hide();
+          $('.showAllButton').hide();
           $('.tweet').show();
           $('textarea').show();
           intervals.push(setInterval(updateTweets, 3000));
@@ -136,7 +138,7 @@
             // Hide all tweets first
             $('.tweet').hide();
             $('textarea').hide();
-            $('button').show();
+            $('.showAllButton').show();
 
             // Show the tweets that have the correct name
             $('.userName')

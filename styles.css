@@ -68,7 +68,7 @@ h2 {
 	margin: 0 0 40px 0;
 }
 
-.button{
+.showAllButton{
 	width: 20%;
 	cursor: pointer; /* Cursor changes to hand while hovered */
 	padding: 5px 25px;
@@ -88,12 +88,12 @@ h2 {
 	color: #f3f3f3;
 	font-size: 1.1em;
 }
-.button:hover {
+.showAllButton:hover {
 	background-color: #00BFA5;
 }
 
 /* Pushed button effect */
-.button:active {
+.showAllButton:active {
 	-webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
 	-moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
 	box-shadow: 0 0 1px rgba(0,0,0, .75);
