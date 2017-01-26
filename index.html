@@ -67,7 +67,7 @@
           $body.on('click', '.showAllButton', showMainPage);
 
           // Update tweets every 5 seconds
-          intervals.push(setInterval(updateTweets, 5000));
+          intervals.push(setInterval(updateTweets, 3000));
         }
 
         // Main page
@@ -79,7 +79,7 @@
           $('.showAllButton').hide();
           $('.tweet').show();
           $('.newTweetForm').show();
-          intervals.push(setInterval(updateTweets, 5000));
+          intervals.push(setInterval(updateTweets, 3000));
         }
 
         // Prepends new tweets to the .tweets div
