@@ -20,7 +20,7 @@
         setupHTML();
         initializeTweets();
 
-        /**************/
+        /*********************/
 
         function setupHTML() {
           $body = $('body');
@@ -30,22 +30,20 @@
           var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton button">Show All Tweets!</button></div>');
           $body.append($showAllButtonDiv);
 
+          // Submit new tweet form
           var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username:</label><input type="text" id="userName" name="userName"><label for="message">Proclamation:</label><input type="text" id="message" name="message"><input type="button" value="Proclaim!" id="newTweetButton"></form></div>');
-
-          // Button to add new tweet
-
           $body.append($newTweetForm);
-
-
 
           // Add .tweets div to contain all the tweets
           $tweets = $('<div class="tweets"></div>');
           $tweets.appendTo($body);
 
+          // Click event handler on new tweet button
           $('#newTweetButton').click(function() {
             var userName = $('#userName').val();
             var message = $('#message').val();
             writeTweet(userName, message);
+            // Completely refresh tweet list from scratch when submitting new tweet
             initializeTweets();
           });
         }
@@ -164,7 +162,6 @@
             // Add timeline <h2>
             $('.timeline').remove();
             $('.tweets').prepend($('<div class="timeline"><h2>' + $($this).text() + '\'s Timeline</h2></div>'));
-
           });
         }
       });

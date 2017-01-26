@@ -11,11 +11,11 @@ header, .timeline {
 h1, h2, label, input[type=text] {
 	font-family: 'Pacifico', cursive;
 	font-size: 20px;
-
 	color: white;
 	width: 100%;
 	margin: 20px auto;
 }
+
 h1, h2, label {
 	text-shadow: 2px 2px black;
 }
@@ -29,6 +29,10 @@ h2 {
 }
 
 /* New Tweet Form */
+.newTweetForm, .newTweetButton, .tweets {
+	display: block;
+	margin: 0 auto;
+}
 
 .newTweetForm {
 	width: 50%;
@@ -39,12 +43,6 @@ h2 {
 	padding: 30px;
 	box-sizing: border-box;
 	text-align: right;
-
-}
-
-.newTweetForm, .newTweetButton, .tweets {
-	display: block;
-	margin: 0 auto;
 }
 
 label {
@@ -73,9 +71,7 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-
 /* Tweets */
-
 .tweets {
 	width: 50%;
 }
@@ -134,6 +130,7 @@ input[type=submit]:hover {
 	color: #f3f3f3;
 	font-size: 1.1em;
 }
+
 .button:hover {
 	background-color: #00BFA5;
 }
