@@ -30,8 +30,8 @@
           var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton">Show All Tweets!</button></div>');
           $body.append($showAllButtonDiv);
 
-          var $newTweetDiv = $('<div class="newTweetDiv"><textarea rows="2" cols="25"></textarea></div>');
-          $body.append($newTweetDiv);
+          var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username: @</label><input type="text" id="userName" name="userName"><label for="userName">Proclamation:</label><input type="text" id="message" name="message"><input type="submit" value="Proclaim!"></form></div>');
+          $body.append($newTweetForm);
 
           // Add .tweets div to contain all the tweets
           $tweets = $('<div class="tweets"></div>');
@@ -67,7 +67,7 @@
           $('.timeline').remove();
           $('.showAllButton').hide();
           $('.tweet').show();
-          $('textarea').show();
+          $('.newTweetForm').show();
           intervals.push(setInterval(updateTweets, 3000));
         }
 
@@ -137,7 +137,7 @@
 
             // Hide all tweets first
             $('.tweet').hide();
-            $('textarea').hide();
+            $('.newTweetForm').hide();
             $('.showAllButton').show();
 
             // Show the tweets that have the correct name
