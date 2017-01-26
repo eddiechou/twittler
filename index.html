@@ -27,10 +27,10 @@
           $body.html('<header><h1>Twittler</h1></header>');
 
           // Add update button
-          var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton">Show All Tweets!</button></div>');
+          var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton button">Show All Tweets!</button></div>');
           $body.append($showAllButtonDiv);
 
-          var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username: @</label><input type="text" id="userName" name="userName"><label for="userName">Proclamation:</label><input type="text" id="message" name="message"><input type="submit" value="Proclaim!"></form></div>');
+          var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username:</label><input type="text" id="userName" name="userName"><label for="userName">Proclamation:</label><input type="text" id="message" name="message"><input type="submit" value="Proclaim!" id="newTweetButton"></form></div>');
           $body.append($newTweetForm);
 
           // Add .tweets div to contain all the tweets
