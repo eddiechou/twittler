@@ -16,6 +16,7 @@ window.users = Object.keys(streams.users);
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
   var username = newTweet.user;
+  streams.users[username] = streams.users[username] || [];
   streams.users[username].push(newTweet);
   streams.home.push(newTweet);
 };
@@ -62,5 +63,7 @@ var writeTweet = function(user, message){
   var tweet = {};
   tweet.user = user;
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
+  console.log("added tweet: " + JSON.stringify(tweet));
 };

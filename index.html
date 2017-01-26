@@ -26,21 +26,34 @@
           $body = $('body');
           $body.html('<header><h1>Twittler</h1></header>');
 
-          // Add update button
+          // Button click handler to view all tweets again
           var $showAllButtonDiv = $('<div class="buttonDiv"><button type="button" class="showAllButton button">Show All Tweets!</button></div>');
           $body.append($showAllButtonDiv);
 
-          var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username:</label><input type="text" id="userName" name="userName"><label for="userName">Proclamation:</label><input type="text" id="message" name="message"><input type="submit" value="Proclaim!" id="newTweetButton"></form></div>');
+          var $newTweetForm = $('<div class="form"><form class="newTweetForm"><label for="userName">Username:</label><input type="text" id="userName" name="userName"><label for="message">Proclamation:</label><input type="text" id="message" name="message"><input type="button" value="Proclaim!" id="newTweetButton"></form></div>');
+
+          // Button to add new tweet
+
           $body.append($newTweetForm);
+
+
 
           // Add .tweets div to contain all the tweets
           $tweets = $('<div class="tweets"></div>');
           $tweets.appendTo($body);
+
+          $('#newTweetButton').click(function() {
+            var userName = $('#userName').val();
+            var message = $('#message').val();
+            writeTweet(userName, message);
+            initializeTweets();
+          });
         }
 
         function initializeTweets() {
           $('.showAllButton').hide();
 
+          $('.tweet').remove();
           // Append all tweets
           var index = streams.home.length - 1;
           while(index >= 0){
@@ -68,7 +81,7 @@
           $('.showAllButton').hide();
           $('.tweet').show();
           $('.newTweetForm').show();
-          intervals.push(setInterval(updateTweets, 3000));
+          intervals.push(setInterval(updateTweets, 5000));
         }
 
         // Prepends new tweets to the .tweets div
